@@ -4,7 +4,9 @@
   "description": "country list app",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve --open --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,42 @@
   "bugs": {
     "url": "https://github.com/youngdo212/countries/issues"
   },
-  "homepage": "https://github.com/youngdo212/countries#readme"
+  "homepage": "https://github.com/youngdo212/countries#readme",
+  "browserslist": [
+    "last 2 version",
+    "> 0.5%"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.12.13",
+    "@babel/preset-env": "^7.12.13",
+    "@babel/preset-react": "^7.12.13",
+    "babel-loader": "^8.2.2",
+    "eslint": "^7.19.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-react": "^7.22.0",
+    "html-webpack-plugin": "^5.0.0",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.5.3",
+    "prettier": "2.2.1",
+    "webpack": "^5.20.2",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
+  },
+  "dependencies": {
+    "core-js": "^3.8.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "regenerator-runtime": "^0.13.7",
+    "styled-components": "^5.2.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
+  }
 }
