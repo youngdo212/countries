@@ -1,0 +1,19 @@
+{
+  "name": "countries",
+  "version": "0.0.1",
+  "description": "country list app",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/youngdo212/countries.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/youngdo212/countries/issues"
+  },
+  "homepage": "https://github.com/youngdo212/countries#readme"
+}
