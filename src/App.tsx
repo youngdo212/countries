@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from "react";
 import styled from 'styled-components';
 
 const Container = styled.h1`
@@ -6,7 +6,7 @@ const Container = styled.h1`
 `;
 
 function App() {
-  return <Container>Hello, World!</Container>;
+  return <Container>Hello, Typescript!</Container>;
 }
 
 export default App;
