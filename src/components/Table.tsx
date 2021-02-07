@@ -75,7 +75,7 @@ const TabularRow = styled.tr`
 `;
 
 const TabularHeader = styled.th<{ clickable: boolean }>`
-  min-width: 200px;
+  width: 200px;
   padding: 10px;
   background: #eaeaea;
   cursor: ${(props) => (props.clickable ? 'pointer' : 'auto')};
@@ -86,8 +86,12 @@ const TabularHeader = styled.th<{ clickable: boolean }>`
 `;
 
 const TabularData = styled.td`
+  max-width: 200px;
   border-bottom: 1px solid #eaeaea;
   padding: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export default Table;
