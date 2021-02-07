@@ -1,4 +1,4 @@
-import { createAction, createReducer } from '@reduxjs/toolkit';
+import { createAction, createReducer, nanoid } from '@reduxjs/toolkit';
 import { INITIAL_PAGE, SortOrder } from '../constant';
 import { Country } from '../types';
 import { getEnumLength } from '../utils/enum';
@@ -29,6 +29,12 @@ export const actions = {
   removeCountry: createAction('removeCountry', (id: string) => ({
     payload: id,
   })),
+  createCountry: createAction(
+    'createCountry',
+    (values: Omit<Country, 'id'>) => ({
+      payload: values,
+    })
+  ),
   fetchCountries: createAction('fetchCountries'),
   search: createAction<string>('search'),
 };
@@ -74,6 +80,10 @@ const reducer = createReducer(INITIAL_STATE, (builder) => {
     .addCase(actions.removeCountry, (state, action) => {
       const id = action.payload;
       state.countries = state.countries.filter((country) => country.id !== id);
+    })
+    .addCase(actions.createCountry, (state, action) => {
+      const newCountry = { ...action.payload, id: nanoid() };
+      state.countries = [newCountry, ...state.countries];
     });
 });
 
