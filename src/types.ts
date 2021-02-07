@@ -13,6 +13,10 @@ export interface APIResult<T> {
   errorMessage: string;
 }
 
+/**********************
+ * 유틸 타입
+ **********************/
+
 /** saga의 call effect에 사용된 함수가 Promise를 반환할 경우 Promise의 resolved된 타입을 반환한다 */
 export type CallReturnType<
   T extends (...args: unknown[]) => unknown
