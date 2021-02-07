@@ -12,19 +12,19 @@ export interface TableColumn {
   /** 컬럼의 이름 */
   title: string;
   /** 컬럼에 해당되는 data의 속성 */
-  dataIndex: string;
+  dataIndex?: string;
   /** 컬럼을 고유하게 식별하는 값. key가 없을 경우 dataIndex를 사용 */
   key?: string | number;
   /** data[dataIndex]를 값으로 받아 렌더링을 수행하는 함수 */
-  render?: (dataValue: unknown) => React.ReactNode;
+  render?: (data: TableData) => React.ReactNode;
   /** 컬럼이 클릭되었을 때 실행할 콜백 함수 */
   onClick?: (column: TableColumn) => void;
 }
 
-interface TableData {
+export interface TableData {
   /** data를 고유하게 식별하는 값 */
-  key: string | number;
-  [property: string]: React.ReactNode;
+  id: string;
+  [dataIndex: string]: React.ReactNode;
 }
 
 /** 테이블 컴포넌트 */
@@ -33,11 +33,11 @@ const Table = ({ columns, dataSource }: TableProps): JSX.Element => {
     <TableWrapper>
       <TableHeader>
         <TabularRow>
-          {columns.map((column) => {
-            const { title, key, dataIndex, onClick } = column;
+          {columns.map((column, index) => {
+            const { title, key, onClick } = column;
             return (
               <TabularHeader
-                key={key || dataIndex}
+                key={key || index}
                 clickable={!!onClick}
                 onClick={() => onClick && onClick(column)}
               >
@@ -49,10 +49,11 @@ const Table = ({ columns, dataSource }: TableProps): JSX.Element => {
       </TableHeader>
       <TableBody>
         {dataSource.map((data) => (
-          <TabularRow key={data.key}>
-            {columns.map(({ dataIndex, render }) => (
-              <TabularData key={dataIndex}>
-                {render ? render(data[dataIndex]) : data[dataIndex]}
+          <TabularRow key={data.id}>
+            {columns.map(({ dataIndex, render }, index) => (
+              <TabularData key={index}>
+                {render && render(data)}
+                {!render && dataIndex && data[dataIndex]}
               </TabularData>
             ))}
           </TabularRow>

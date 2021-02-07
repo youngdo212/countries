@@ -1,4 +1,5 @@
 export interface Country {
+  id: string;
   name: string;
   alpha2Code: string;
   callingCodes: string[];

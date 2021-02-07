@@ -1,3 +1,4 @@
+import { nanoid } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { APIResult, Country } from '../types';
 
@@ -10,9 +11,9 @@ export function getCountries(): Promise<APIResult<Country[]>> {
     url:
       'https://restcountries.eu/rest/v2/all?fields=alpha2Code;capital;name;region;callingCodes',
   })
-    .then(({ data }) => ({
+    .then(({ data }: { data: Country[] }) => ({
       isSuccess: true,
-      data,
+      data: data.map((item) => ({ ...item, id: nanoid() })),
       errorMessage: '',
     }))
     .catch((error) => ({
