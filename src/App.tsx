@@ -34,7 +34,7 @@ const Header = styled.div`
 `;
 
 const Content = styled.div`
-  width: 1100px;
+  width: 1320px;
   margin: 0 auto;
 `;
 

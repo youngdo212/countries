@@ -1,23 +1,36 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Table, { TableColumn } from '../components/Table';
+import Table, { TableColumn, TableData } from '../components/Table';
 import { SORT_ORDER_TEXT } from '../constant';
 import { actions, SortOptions } from '../state';
 import {
-  renderableCountriesSelector,
+  countriesWithLimitSelector,
   sortOptionsSelector,
 } from '../state/selector';
+import { assertIsDefined } from '../utils/assert';
 
 const { useEffect, useCallback } = React;
 
 /** 국가 정보를 나타내는 컴포넌트 */
 const CountryTable = (): JSX.Element => {
   const dispatch = useDispatch();
-  const countries = useSelector(renderableCountriesSelector);
+  const countries = useSelector(countriesWithLimitSelector);
   const sortOptions = useSelector(sortOptionsSelector);
 
   const onColumnClick = useCallback(
-    (column: TableColumn) => dispatch(actions.sortCountries(column.dataIndex)),
+    ({ dataIndex }: TableColumn) => {
+      assertIsDefined(dataIndex);
+      dispatch(actions.sortCountries(dataIndex));
+    },
+    [dispatch]
+  );
+
+  const removeCountry = useCallback(
+    ({ target }: React.MouseEvent) => {
+      if (target instanceof HTMLElement && target.dataset.id) {
+        dispatch(actions.removeCountry(target.dataset.id));
+      }
+    },
     [dispatch]
   );
 
@@ -35,9 +48,9 @@ const CountryTable = (): JSX.Element => {
     {
       title: getColumnTitle('callingCodes', sortOptions),
       dataIndex: 'callingCodes',
-      render: (codes: unknown) => {
-        if (Array.isArray(codes)) {
-          return codes.join(', ');
+      render: (data: TableData) => {
+        if (Array.isArray(data.callingCodes)) {
+          return data.callingCodes.join(', ');
         }
       },
       onClick: onColumnClick,
@@ -51,6 +64,16 @@ const CountryTable = (): JSX.Element => {
       title: getColumnTitle('region', sortOptions),
       dataIndex: 'region',
       onClick: onColumnClick,
+    },
+    {
+      title: 'Actions',
+      render: function render({ id }: TableData) {
+        return (
+          <button data-id={id} onClick={removeCountry}>
+            삭제
+          </button>
+        );
+      },
     },
   ];
 

@@ -67,17 +67,13 @@ const sortedCountriesSelector = createSelector(
 );
 
 /** 현재 페이지까지의 국가 정보 객체를 배열로 반환하는 selector */
-const countriesWithLimitSelector = createSelector(
+export const countriesWithLimitSelector = createSelector(
   sortedCountriesSelector,
   currentPageSelector,
-  (countries, currentPage) => countries.slice(0, currentPage * COUNTRY_LIMIT)
-);
-
-/** 국가 리스트를 렌더링 가능한 객체의 배열로 나타내는 selector */
-export const renderableCountriesSelector = createSelector(
-  countriesWithLimitSelector,
-  (countries) =>
-    countries.map((country) => ({ ...country, key: country.alpha2Code }))
+  (countries, currentPage) =>
+    countries
+      .map((country) => ({ ...country }))
+      .slice(0, currentPage * COUNTRY_LIMIT)
 );
 
 /** 다음 페이지의 국가 리스트가 존재하는 지 나타내는 selector */

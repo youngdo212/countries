@@ -26,6 +26,9 @@ export const actions = {
     payload: key,
   })),
   setSearchKeyword: createAction<string>('setSearchKeyword'),
+  removeCountry: createAction('removeCountry', (id: string) => ({
+    payload: id,
+  })),
   fetchCountries: createAction('fetchCountries'),
   search: createAction<string>('search'),
 };
@@ -67,6 +70,10 @@ const reducer = createReducer(INITIAL_STATE, (builder) => {
       const keyword = action.payload;
       state.searchKeyword = keyword;
       state.currentPage = INITIAL_PAGE;
+    })
+    .addCase(actions.removeCountry, (state, action) => {
+      const id = action.payload;
+      state.countries = state.countries.filter((country) => country.id !== id);
     });
 });
 
