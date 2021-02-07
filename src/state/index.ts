@@ -14,6 +14,7 @@ interface State {
   countries: Country[];
   currentPage: number;
   sortOptions: SortOptions;
+  searchKeyword: string;
 }
 
 export const actions = {
@@ -24,6 +25,7 @@ export const actions = {
   sortCountries: createAction('sortCountries', (key: string) => ({
     payload: key,
   })),
+  setSearchKeyword: createAction<string>('setSearchKeyword'),
   fetchCountries: createAction('fetchCountries'),
 };
 
@@ -34,6 +36,7 @@ const INITIAL_STATE: State = {
     key: 'name',
     sortOrder: SortOrder.Default,
   },
+  searchKeyword: '',
 };
 
 const reducer = createReducer(INITIAL_STATE, (builder) => {
@@ -57,6 +60,11 @@ const reducer = createReducer(INITIAL_STATE, (builder) => {
         sortOptions.sortOrder = SortOrder.ASC;
       }
 
+      state.currentPage = INITIAL_PAGE;
+    })
+    .addCase(actions.setSearchKeyword, (state, action) => {
+      const keyword = action.payload;
+      state.searchKeyword = keyword;
       state.currentPage = INITIAL_PAGE;
     });
 });
