@@ -27,6 +27,7 @@ export const actions = {
   })),
   setSearchKeyword: createAction<string>('setSearchKeyword'),
   fetchCountries: createAction('fetchCountries'),
+  search: createAction<string>('search'),
 };
 
 const INITIAL_STATE: State = {

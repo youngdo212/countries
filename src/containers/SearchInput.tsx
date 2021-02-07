@@ -1,19 +1,21 @@
 import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import useAutofocus from '../hooks/useAutofocus';
 import { actions } from '../state';
-import { searchKeywordSelector } from '../state/selector';
 
-const { useRef, useCallback } = React;
+const { useRef, useCallback, useState } = React;
 
 /** 검색 기능을 제공하는 컴포넌트 */
 const SearchInput = (): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const searchKeyword = useSelector(searchKeywordSelector);
+  const [searchInputValue, setSearchInputValue] = useState('');
   const dispatch = useDispatch();
   const handleChange = useCallback(
-    (e) => dispatch(actions.setSearchKeyword(e.target.value)),
+    (e) => {
+      setSearchInputValue(e.target.value);
+      dispatch(actions.search(e.target.value));
+    },
     [dispatch]
   );
 
@@ -23,7 +25,7 @@ const SearchInput = (): JSX.Element => {
     <Input
       ref={inputRef}
       type="text"
-      value={searchKeyword}
+      value={searchInputValue}
       onChange={handleChange}
     />
   );
