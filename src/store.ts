@@ -1,7 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import reducer from './state/index';
+import appReducer from './state/index';
+import { reducer as formReducer } from 'redux-form';
 import saga from './state/saga';
+
+const reducer = {
+  app: appReducer,
+  form: formReducer,
+};
 
 const sagaMiddleware = createSagaMiddleware();
 

@@ -3,10 +3,11 @@ import { COUNTRY_LIMIT, SortOrder } from '../constant';
 import { RootState } from '../store';
 import { Country } from '../types';
 
-const countriesSelector = (state: RootState) => state.countries;
-const currentPageSelector = (state: RootState) => state.currentPage;
-export const sortOptionsSelector = (state: RootState) => state.sortOptions;
-export const searchKeywordSelector = (state: RootState) => state.searchKeyword;
+const countriesSelector = (state: RootState) => state.app.countries;
+const currentPageSelector = (state: RootState) => state.app.currentPage;
+export const sortOptionsSelector = (state: RootState) => state.app.sortOptions;
+export const searchKeywordSelector = (state: RootState) =>
+  state.app.searchKeyword;
 
 /** 검색어로 필터링 된 국가 배열 */
 const countriesWithSearchKeywordSelector = createSelector(
